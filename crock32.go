@@ -28,7 +28,7 @@ import "errors"
 
 const cutoff uint64 = (1<<64-1)/32 + 1
 
-// Decode converts a string matching Douglas Crockford's character into an unsigned 64-bit integer.
+// Decode converts a string matching Douglas Crockford's character set (case insensitive) into an unsigned 64-bit integer.
 func Decode(s string) (uint64, error) {
 	var n uint64
 	for i := 0; i < len(s); i++ {
