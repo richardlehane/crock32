@@ -10,6 +10,6 @@ Crock32 is useful for "expressing numbers in a form that can be conveniently and
 
 See [http://www.crockford.com/wrmg/base32.html](http://www.crockford.com/wrmg/base32.html) for details.
 
-Note: crock32 from Crockford in its use of lower-case letters when encoding (decode works for both cases). To change, use: `crock32.SetDigits("0123456789ABCDEFGHJKMNPQRSTVWXYZ")`
+Note: crock32 differs from Crockford in its use of lower-case letters when encoding (decode works for both cases). To change, use: `crock32.SetDigits("0123456789ABCDEFGHJKMNPQRSTVWXYZ")`
 
 Install with `go get github.com/richardlehane/crock32`
