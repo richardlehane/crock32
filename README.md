@@ -6,7 +6,7 @@ Example usage:
     s := crock32.Encode(i)
     fmt.Println(s)
 
-Crock32 is useful for "expressing numbers in a form that can be conveniently and accurately transmitted between humans and computer systems."
+Crock32 is useful for "expressing numbers in a form that can be conveniently and accurately transmitted between humans and computer systems".
 
 See [http://www.crockford.com/wrmg/base32.html](http://www.crockford.com/wrmg/base32.html) for details.
 
