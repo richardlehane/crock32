@@ -19,9 +19,10 @@
 // Note: crock32 differs from Crockford in its use of lower-case letters when encoding (decode works for both cases). To change, use: crock32.SetDigits("0123456789ABCDEFGHJKMNPQRSTVWXYZ")
 //
 // Example:
-//   i, _ := crock32.Decode("a1j3")
-//   s := crock32.Encode(i)
-//   fmt.Println(s)
+//
+//	i, _ := crock32.Decode("a1j3")
+//	s := crock32.Encode(i)
+//	fmt.Println(s)
 package crock32
 
 import "errors"
@@ -35,19 +36,12 @@ func Decode(s string) (uint64, error) {
 		var v byte
 		d := s[i]
 		switch {
-		// Crockford Base32 spec: on decode, O/o normalize to the digit 0
-		// and I/i/L/l normalize to the digit 1. Assign the numeric value,
-		// not the ASCII code of '0'/'1' (which is 48/49 and corrupts the
-		// base-32 accumulation below).
+		case d == '-':
+			continue
 		case d == 'O', d == 'o':
 			v = 0
 		case d == 'L', d == 'l', d == 'I', d == 'i':
 			v = 1
-		// Crockford spec: "Hyphens can be inserted into symbol strings ...
-		// Hyphens are ignored during decoding." Skip them instead of
-		// rejecting the whole string.
-		case d == '-':
-			continue
 		case '0' <= d && d <= '9':
 			v = d - '0'
 		case 'a' <= d && d <= 'h':
@@ -73,11 +67,9 @@ func Decode(s string) (uint64, error) {
 		default:
 			return 0, errors.New("crock32.Decode: invalid character " + string(d))
 		}
-
 		if n >= cutoff {
 			return 0, errors.New("crock32.Decode:" + s + " overflows uint64")
 		}
-
 		n = n*32 + uint64(v)
 	}
 	return n, nil
