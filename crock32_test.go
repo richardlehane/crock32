@@ -3,6 +3,7 @@ package crock32
 import "testing"
 
 func TestDecode(t *testing.T) {
+	SetUpper()
 	cases := []struct {
 		in  string
 		exp uint64
@@ -52,6 +53,35 @@ func TestRoundTrip(t *testing.T) {
 		}
 		if back != n {
 			t.Errorf("Decode(Encode(%d)=%q) = %d, want %d", n, enc, back, n)
+		}
+	}
+	for _, n := range values {
+		enc := EncodeWithCheck(n)
+		back, err := DecodeWithCheck(enc)
+		if err != nil {
+			t.Errorf("Decode(Encode(%d)=%q) unexpected error: %v", n, enc, err)
+			continue
+		}
+		if back != n {
+			t.Errorf("Decode(Encode(%d)=%q) = %d, want %d", n, enc, back, n)
+		}
+	}
+}
+
+func TestEncodeCheck(t *testing.T) {
+	cases := []struct {
+		in  uint64
+		exp string
+	}{
+		{384, "c0e"},
+		{481, "f10"},
+		{9248, "910="},
+		{67802, "226tj"},
+	}
+	for _, c := range cases {
+		got := EncodeWithCheck(c.in)
+		if got != c.exp {
+			t.Errorf("Encode with check (%d) = %s, want %s", c.in, got, c.exp)
 		}
 	}
 }
